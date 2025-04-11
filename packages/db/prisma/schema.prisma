@@ -13,3 +13,27 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id      String    @id     @default(uuid())
+  username    String    
+  email       String  @unique
+  password    String
+  workspaces    workspace[]   
+}
+
+model workspace {
+  id      Int      @id  @default(autoincrement())
+  name    String  
+  createdAt     DateTime  @default(now())
+  adminId     String
+  admin      User   @relation(fields: [adminId] , references: [id])
+  nodes       Node[]
+}
+
+model Node {
+  id          Int             @id @default(autoincrement())
+  name        String       
+  
+
+}
